@@ -44,7 +44,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/top_margin"
             android:enabled="false"
-            android:text="@string/ok" />
+            android:text="@string/login" />
     </LinearLayout>
 
 

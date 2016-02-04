@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         tiPassword = (TextInputLayout) findViewById(R.id.tiPassword);
 
+        tiPassword.setHint(getString(R.string.password));
+
         btnOk = (Button) findViewById(R.id.btnOk);
 
         pattern = Pattern.compile(emailPattern);
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = etUserName.getText().toString();
-                if (etUserName.getText().toString().length() < 8) {
+                if (!validateEmail(text)) {
                     tiUserName.setError(getString(R.string.username_error));
                     userNameValid = false;
                 } else {
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (etPassword.getText().toString().length() < 8) {
                     passwordValid = false;
-                    tiPassword.setError(getString(R.string.username_error));
+                    tiPassword.setError(getString(R.string.password_error));
                 } else {
                     passwordValid = true;
                     tiPassword.setError(null);
@@ -108,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tiPassword.setHint(getString(R.string.password));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override

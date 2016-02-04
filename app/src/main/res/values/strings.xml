@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Near Ebene</string>
-    <string name="ok">OK</string>
+    <string name="login">Login</string>
     <string name="userName">User Name</string>
     <string name="password">Password</string>
-    <string name="username_error">Less than 8 characters</string>
+    <string name="username_error">Invalid email address</string>
+    <string name="password_error">Less than 8 characters</string>
     <string name="logged_in">Logged in!</string>
 
     <string name="maps_api_key">AIzaSyD-kFBzahvFNPJA_L-LCkudjjDnqaQvxqE</string>
