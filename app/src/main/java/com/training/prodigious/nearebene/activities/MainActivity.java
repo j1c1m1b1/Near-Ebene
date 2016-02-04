@@ -1,4 +1,4 @@
-package com.training.prodigious.nearebene;
+package com.training.prodigious.nearebene.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.training.prodigious.nearebene.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

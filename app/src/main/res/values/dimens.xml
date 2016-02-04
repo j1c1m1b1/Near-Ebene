@@ -2,4 +2,5 @@
 <resources>
     <dimen name="inner_padding">16dp</dimen>
     <dimen name="top_margin">8dp</dimen>
+    <dimen name="default_bar_elevation">4dp</dimen>
 </resources>
