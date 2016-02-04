@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Near Ebene</string>
+    <string name="ok">OK</string>
+    <string name="userName">User Name</string>
+    <string name="password">Password</string>
+    <string name="username_error">Less than 8 characters</string>
+    <string name="logged_in">Logged in!</string>
+
+    <string name="maps_api_key">AIzaSyD-kFBzahvFNPJA_L-LCkudjjDnqaQvxqE</string>
+    <string name="places_server_key">AIzaSyB0qXLZ5dYffYy7b9xqMhQ3i0AOo86KuEc</string>
+    <string name="map_coming_soon">Map coming soon</string>
+
+    <string name="email_pattern" translatable="false">
+        <![CDATA[^[a-zA-Z0-9#_~!$&\'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$]]>
+    </string>
 </resources>
