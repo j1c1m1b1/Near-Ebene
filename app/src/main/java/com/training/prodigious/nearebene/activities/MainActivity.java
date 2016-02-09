@@ -1,15 +1,18 @@
-package com.training.prodigious.nearebene;
+package com.training.prodigious.nearebene.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.training.prodigious.nearebene.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnOk;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         String emailPattern = getString(R.string.email_pattern);
 
