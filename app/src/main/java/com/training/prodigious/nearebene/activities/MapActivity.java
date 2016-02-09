@@ -13,7 +13,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.training.prodigious.nearebene.R;
 import com.training.prodigious.nearebene.fragments.LocationSettingsFragment;
@@ -35,10 +34,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        fragment = new LocationSettingsFragment();
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        fragment = new LocationSettingsFragment();
         transaction.add(fragment, getString(R.string.locations_settings_fragment));
         transaction.commit();
 
@@ -50,6 +50,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == LocationSettingsFragment.REQUEST_CHECK_SETTINGS) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        } else if (requestCode == LocationSettingsFragment.API_CLIENT_RESOLUTION_REQUEST) {
             fragment.onActivityResult(requestCode, resultCode, data);
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -77,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
         if (googleMap != null) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng, 14, 0f, 0f)));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
         }
     }
 

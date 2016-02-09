@@ -40,6 +40,7 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
 
     public static final int LOCATION_PERMS_REQUEST_CODE = 100;
     public static final int REQUEST_CHECK_SETTINGS = 200;
+    public static final int API_CLIENT_RESOLUTION_REQUEST = 300;
     private static final String TAG = LocationSettingsFragment.class.getSimpleName();
 
     private LocationRequest locationRequest;
@@ -66,13 +67,15 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
         super.onStart();
         if (apiClient != null && !apiClient.isConnected()) {
             apiClient.connect();
+        } else {
+            startApiClient();
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (apiClient != null) {
+        if (apiClient != null && apiClient.isConnected()) {
             apiClient.disconnect();
         }
     }
@@ -80,16 +83,17 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
     @Override
     public void onResume() {
         super.onResume();
-        requestLocationUpdates();
-        if (apiClient != null && apiClient.isConnected() && listener != null) {
+        if (apiClient != null && apiClient.isConnected()) {
             createLocationSettingsRequest();
+        } else {
+            startApiClient();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (apiClient != null && apiClient.isConnected() && listener != null) {
+        if (apiClient != null && apiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(apiClient, this);
         }
     }
@@ -177,10 +181,8 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-
-            apiClient.connect();
         }
-        createLocationSettingsRequest();
+        apiClient.connect();
     }
 
     @Override
@@ -198,6 +200,11 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e(TAG, "" + connectionResult.getErrorMessage());
+        try {
+            connectionResult.startResolutionForResult(getActivity(), API_CLIENT_RESOLUTION_REQUEST);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createLocationSettingsRequest() {
@@ -259,14 +266,21 @@ public class LocationSettingsFragment extends Fragment implements GoogleApiClien
                         break;
                 }
                 break;
+            case API_CLIENT_RESOLUTION_REQUEST:
+                if (resultCode == Activity.RESULT_OK && apiClient != null) {
+                    apiClient.connect();
+                }
+                break;
         }
     }
 
     private void requestLocationUpdates() {
-        if (listener != null) {
-            //noinspection ResourceType
-            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, this);
+
+        if (locationRequest == null) {
+            createLocationRequest();
         }
+        //noinspection ResourceType
+        LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locationRequest, this);
     }
 
     @Override
